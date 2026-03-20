@@ -1,0 +1,197 @@
+.app {
+  min-height: 100vh;
+  background: #12121e;
+  color: #fff;
+}
+
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 24px 40px;
+}
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #00c853;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.status-time {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Sections */
+.section {
+  margin-bottom: 24px;
+}
+
+/* Price Grid */
+.price-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.price-grid--2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.exchange-rate {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-left: 8px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+.status-dot--error {
+  background: #ff1744;
+}
+
+/* Loading */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(212, 175, 55, 0.2);
+  border-top-color: #d4af37;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Market Info */
+.market-info {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.market-info__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.market-info__label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.market-info__value {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.footer p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  margin: 4px 0;
+}
+
+.footer-hint a {
+  color: #d4af37;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.footer-hint a:hover {
+  opacity: 1;
+}
+
+.market-info__value a {
+  color: #d4af37;
+  text-decoration: none;
+}
+
+.market-info__value a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .main {
+    padding: 16px;
+  }
+
+  .price-grid--2col {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .status-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .market-info {
+    gap: 20px;
+    padding: 12px;
+  }
+
+  .market-info__value {
+    font-size: 12px;
+  }
+}
+
+/* Very small mobile */
+@media (max-width: 380px) {
+  .price-grid {
+    grid-template-columns: 1fr;
+  }
+}

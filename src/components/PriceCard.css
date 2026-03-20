@@ -1,0 +1,138 @@
+.price-card {
+  background: linear-gradient(145deg, #1e1e30, #252540);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.price-card--selected {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.price-card--selected::before {
+  background: linear-gradient(90deg, #d4af37, #f0d060);
+}
+
+.price-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.price-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.price-card__name-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-card__name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.price-card__symbol {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.price-card__price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.price-card__currency {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-right: 2px;
+}
+
+.price-card__change-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.price-card__change,
+.price-card__percent {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.up {
+  color: #00c853;
+}
+
+.down {
+  color: #ff1744;
+}
+
+.price-card__details {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.price-card__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.price-card__label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.price-card__value {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .price-card {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+
+.price-card__price {
+    font-size: 24px;
+  }
+
+  .price-card__currency {
+    font-size: 15px;
+  }
+
+  .price-card__name {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,153 @@
+.chart-container {
+  background: linear-gradient(145deg, #1e1e30, #252540);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.chart-metal-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.chart-range-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.chart-data-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.chart-ranges {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.chart-range-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.chart-range-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.chart-range-btn--active {
+  background: rgba(212, 175, 55, 0.2);
+  color: #d4af37;
+}
+
+.chart-body {
+  width: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+.chart-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(212, 175, 55, 0.2);
+  border-top-color: #d4af37;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.chart-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chart-update-time,
+.chart-unit {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 640px) {
+  .chart-container {
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chart-metal-name {
+    font-size: 16px;
+  }
+
+  .chart-range-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .chart-body {
+    min-height: 240px;
+  }
+
+  .chart-body .recharts-responsive-container {
+    height: 240px !important;
+  }
+
+  .chart-footer {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
