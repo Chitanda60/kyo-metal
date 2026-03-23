@@ -1,0 +1,2 @@
+检查price-collector里的replyText，检查返回数据是否依赖变量，完善输出内容。检查price-collector里的server.listen，查看回调函数里的console.log输出的值是否依赖变量，完善输出内容。
+完善当前贵金属价格机器人命令列表
