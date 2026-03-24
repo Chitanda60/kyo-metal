@@ -2,16 +2,36 @@ name: Update History Data
 
 on:
   schedule:
-    # 每天北京时间 17:00（UTC 09:00）更新，交易所收盘后
-    - cron: '0 9 * * 1-5'
-  workflow_dispatch: # 支持手动触发
+    # 国内数据：北京时间每周一到周五 17:30（UTC 09:30）
+    - cron: '30 9 * * 1-5'
+    # 国际数据（夏令时）：北京时间每周一到周六 05:30（UTC 21:30，前一天）
+    - cron: '30 21 * * 0-5'
+    # 国际数据（冬令时）：北京时间每周一到周六 06:30（UTC 22:30，前一天）
+    - cron: '30 22 * * 0-5'
+  workflow_dispatch:
+    inputs:
+      data_type:
+        description: '数据类型 (cn: 国内, intl: 国际，默认全部)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - cn
+          - intl
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  update-cn:
     runs-on: ubuntu-latest
+    # 只在以下情况运行国内数据：
+    # 1. 手动触发且选择 cn 或 all
+    # 2. cron 触发且是 UTC 09:30（国内数据时间）
+    if: |
+      github.event_name == 'workflow_dispatch' && (inputs.data_type == 'cn' || inputs.data_type == 'all') ||
+      github.event_name == 'schedule' && contains(github.event.schedule, '30 9')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,8 +44,8 @@ jobs:
       - name: Install AKShare
         run: pip install akshare --upgrade
 
-      - name: Fetch latest data
-        run: python scripts/fetch_cn_history.py
+      - name: Fetch domestic data
+        run: python scripts/fetch_cn_history.py --type cn
 
       - name: Commit & Push
         run: |
@@ -35,6 +55,41 @@ jobs:
           if git diff --staged --quiet; then
             echo "No data changes"
           else
-            git commit -m "chore: update gold/silver history data $(date +%Y-%m-%d)"
+            git commit -m "chore: update domestic gold/silver history data $(date +%Y-%m-%d)"
+            git push
+          fi
+
+  update-intl:
+    runs-on: ubuntu-latest
+    # 只在以下情况运行国际数据：
+    # 1. 手动触发且选择 intl 或 all
+    # 2. cron 触发且是 UTC 21:30 或 22:30（国际数据时间）
+    if: |
+      github.event_name == 'workflow_dispatch' && (inputs.data_type == 'intl' || inputs.data_type == 'all') ||
+      github.event_name == 'schedule' && (contains(github.event.schedule, '30 21') || contains(github.event.schedule, '30 22'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install AKShare
+        run: pip install akshare --upgrade
+
+      - name: Fetch international data
+        run: python scripts/fetch_cn_history.py --type intl
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          if git diff --staged --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "chore: update international gold/silver history data $(date +%Y-%m-%d)"
             git push
           fi

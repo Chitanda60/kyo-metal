@@ -14,11 +14,12 @@
   public/data/intl_gold_history.json
   public/data/intl_silver_history.json
 
-可通过 GitHub Actions 每日自动执行。
+可通过 GitHub Actions 定时自动执行。
 """
 
 import os
 import sys
+import argparse
 
 # 必须在导入 akshare 前禁用代理（东方财富 API 在代理环境下可能连接失败）
 for key in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 
@@ -166,8 +167,9 @@ def fetch_comex_with_fallback(symbol_em: str, symbol_sina: str, name: str, outpu
             raise Exception(f'主接口: {e}; 备选接口: {e2}')
 
 
-def main():
-    errors = []
+def fetch_domestic_data(errors: list):
+    """获取国内黄金白银数据"""
+    print('\n📊 开始获取国内数据...')
     
     # 国内黄金 Au99.99 — CNY/克
     try:
@@ -184,9 +186,12 @@ def main():
     except Exception as e:
         errors.append(f'国内白银: {e}')
         print(f'  ✗ 国内白银拉取失败: {e}')
-    
-    time.sleep(REQUEST_INTERVAL)
 
+
+def fetch_international_data(errors: list):
+    """获取国际黄金白银数据"""
+    print('\n📊 开始获取国际数据...')
+    
     # COMEX黄金 — USD/盎司（带备选接口）
     try:
         fetch_comex_with_fallback('GC00Y', 'GC', 'COMEX黄金', 'intl_gold_history')
@@ -202,6 +207,21 @@ def main():
     except Exception as e:
         errors.append(f'COMEX白银: {e}')
         print(f'  ✗ COMEX白银拉取失败: {e}')
+
+
+def main():
+    parser = argparse.ArgumentParser(description='拉取贵金属历史数据')
+    parser.add_argument('--type', choices=['cn', 'intl', 'all'], default='all',
+                        help='数据类型：cn=国内, intl=国际, all=全部（默认）')
+    args = parser.parse_args()
+
+    errors = []
+
+    if args.type in ('cn', 'all'):
+        fetch_domestic_data(errors)
+
+    if args.type in ('intl', 'all'):
+        fetch_international_data(errors)
 
     if errors:
         print(f'\n⚠ 完成，但有 {len(errors)} 个错误:')
